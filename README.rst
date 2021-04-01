@@ -1,4 +1,4 @@
-to make test plots
+Plotting: to make test plots
 ------------------
 
 .. image:: http://img.shields.io/badge/powered%20by-AstroPy-orange.svg?style=flat
