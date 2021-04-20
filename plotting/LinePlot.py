@@ -1,11 +1,11 @@
 # @Author: lshuns
 # @Date:   2021-04-05, 21:44:40
 # @Last modified by:   lshuns
-# @Last modified time: 2021-04-20, 22:04:13
+# @Last modified time: 2021-04-20, 22:21:45
 
 ### everything about Line/Point plot
 
-__all__ = ["LinePlotFunc", "LinePlotFunc_subplots"]
+__all__ = ["LinePlotFunc", "LinePlotFunc_subplots", "ErrorPlotFunc", "ErrorPlotFunc_subplots"]
 
 import math
 import logging
