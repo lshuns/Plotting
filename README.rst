@@ -5,9 +5,12 @@ Plotting: to make test plots
     :target: http://www.astropy.org
     :alt: Powered by Astropy Badge
 
-Current supported plotting functions:
-    For histogram: "HistPlotFunc", "Hist2DPlotFunc", "HistPlotFunc_subplots"
-    For line/point plots: "LinePlotFunc", "LinePlotFunc_subplots", "ErrorPlotFunc", "ErrorPlotFunc_subplots"
+Current supported functions
+---------------------------
+
+**For histogram**: "HistPlotFunc", "Hist2DPlotFunc", "HistPlotFunc_subplots"
+
+**For line/point plots**: "LinePlotFunc", "LinePlotFunc_subplots", "ErrorPlotFunc", "ErrorPlotFunc_subplots"
 
 License
 -------
