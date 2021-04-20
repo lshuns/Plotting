@@ -1,7 +1,7 @@
 # @Author: lshuns
 # @Date:   2021-04-01, 21:04:38
 # @Last modified by:   lshuns
-# @Last modified time: 2021-04-14, 22:08:13
+# @Last modified time: 2021-04-20, 22:43:18
 
 ### everything about histogram
 
@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 
 from matplotlib.ticker import AutoMinorLocator, LogLocator
 
-from CommonInternal import _vhlines
+from .CommonInternal import _vhlines
 
 logging.basicConfig(format='%(name)s : %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)

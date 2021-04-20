@@ -1,7 +1,7 @@
 # @Author: lshuns
 # @Date:   2021-04-05, 21:44:40
 # @Last modified by:   lshuns
-# @Last modified time: 2021-04-20, 22:21:45
+# @Last modified time: 2021-04-20, 22:43:22
 
 ### everything about Line/Point plot
 
@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 
 from matplotlib.ticker import AutoMinorLocator, LogLocator
 
-from CommonInternal import _vhlines
+from .CommonInternal import _vhlines
 
 logging.basicConfig(format='%(name)s : %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
