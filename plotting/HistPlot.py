@@ -1,7 +1,7 @@
 # @Author: lshuns
 # @Date:   2021-04-01, 21:04:38
 # @Last modified by:   lshuns
-# @Last modified time: 2021-04-20, 22:43:18
+# @Last modified time: 2021-04-21, 22:45:45
 
 ### everything about histogram
 
@@ -192,13 +192,23 @@ def HistPlotFunc_subplots(outpath, N_plots,
         logger.warning('DENSITY and wgs are provided simultaneously!!!')
 
     i_plot = 0
-    handles = []
     for i_row in range(N_rows):
         for i_col in range(N_cols):
             if i_plot >= N_plots:
-                axs[i_row, i_col].axis('off')
+                if N_rows == 1:
+                    axs[i_col].axis('off')
+                elif N_cols == 1:
+                    axs[i_row].axis('off')
+                else:
+                    axs[i_row, i_col].axis('off')
             else:
-                ax = axs[i_row, i_col]
+                if N_rows == 1:
+                    ax = axs[i_col]
+                elif N_cols == 1:
+                    ax = axs[i_row]
+                else:
+                    ax = axs[i_row, i_col]
+
                 paras = paras_list[i_plot]
                 COLORs = COLORs_list[i_plot]
                 if LABELs_list is not None:

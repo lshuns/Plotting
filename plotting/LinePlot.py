@@ -1,7 +1,7 @@
 # @Author: lshuns
 # @Date:   2021-04-05, 21:44:40
 # @Last modified by:   lshuns
-# @Last modified time: 2021-04-20, 22:43:22
+# @Last modified time: 2021-04-21, 22:44:54
 
 ### everything about Line/Point plot
 
@@ -156,13 +156,23 @@ def LinePlotFunc_subplots(outpath, N_plots,
     fig.subplots_adjust(wspace=0)
 
     i_plot = 0
-    handles = []
     for i_row in range(N_rows):
         for i_col in range(N_cols):
             if i_plot >= N_plots:
-                axs[i_row, i_col].axis('off')
+                if N_rows == 1:
+                    axs[i_col].axis('off')
+                elif N_cols == 1:
+                    axs[i_row].axis('off')
+                else:
+                    axs[i_row, i_col].axis('off')
             else:
-                ax = axs[i_row, i_col]
+                if N_rows == 1:
+                    ax = axs[i_col]
+                elif N_cols == 1:
+                    ax = axs[i_row]
+                else:
+                    ax = axs[i_row, i_col]
+
                 xvals = xvals_list[i_plot]
                 yvals = yvals_list[i_plot]
 
@@ -424,13 +434,23 @@ def ErrorPlotFunc_subplots(outpath, N_plots,
     fig.subplots_adjust(wspace=0)
 
     i_plot = 0
-    handles = []
     for i_row in range(N_rows):
         for i_col in range(N_cols):
             if i_plot >= N_plots:
-                axs[i_row, i_col].axis('off')
+                if N_rows == 1:
+                    axs[i_col].axis('off')
+                elif N_cols == 1:
+                    axs[i_row].axis('off')
+                else:
+                    axs[i_row, i_col].axis('off')
             else:
-                ax = axs[i_row, i_col]
+                if N_rows == 1:
+                    ax = axs[i_col]
+                elif N_cols == 1:
+                    ax = axs[i_row]
+                else:
+                    ax = axs[i_row, i_col]
+
                 xvals = xvals_list[i_plot]
                 yvals = yvals_list[i_plot]
                 yerrs = yerrs_list[i_plot]
