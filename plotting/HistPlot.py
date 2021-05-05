@@ -1,7 +1,7 @@
 # @Author: lshuns
 # @Date:   2021-04-01, 21:04:38
 # @Last modified by:   lshuns
-# @Last modified time: 2021-04-21, 22:45:45
+# @Last modified time: 2021-05-05, 8:21:22
 
 ### everything about histogram
 
@@ -202,7 +202,9 @@ def HistPlotFunc_subplots(outpath, N_plots,
                 else:
                     axs[i_row, i_col].axis('off')
             else:
-                if N_rows == 1:
+                if (N_rows==1) and (N_cols == 1):
+                    ax = axs
+                elif N_rows == 1:
                     ax = axs[i_col]
                 elif N_cols == 1:
                     ax = axs[i_row]
