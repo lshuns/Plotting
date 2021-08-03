@@ -34,10 +34,16 @@ def LinePlotFunc(outpath,
                 xtick_min_label=True, xtick_spe=None, ytick_min_label=True, ytick_spe=None,
                 vlines=None, vline_styles=None, vline_colors=None, vline_labels=None, vline_widths=None,
                 hlines=None, hline_styles=None, hline_colors=None, hline_labels=None, hline_widths=None,
-                xlog=False, invertX=False, ylog=False, invertY=False, loc_legend='best'):
+                xlog=False, invertX=False, ylog=False, invertY=False, loc_legend='best',
+                font_size=12, usetex=False):
     """
     Line plot for multiple parameters
     """
+
+    # font size
+    plt.rc('font', size=font_size)
+    # tex
+    plt.rcParams["text.usetex"] = usetex
 
     if outpath != 'show':
         backend_orig = plt.get_backend()
@@ -140,10 +146,16 @@ def LinePlotFunc_subplots(outpath, N_plots,
                             xtick_min_label=True, xtick_spe=None, ytick_min_label=True, ytick_spe=None,
                             vlines=None, vline_styles=None, vline_colors=None, vline_labels=None, vline_widths=None,
                             hlines=None, hline_styles=None, hline_colors=None, hline_labels=None, hline_widths=None,
-                            xlog=False, invertX=False, ylog=False, invertY=False, loc_legend='best'):
+                            xlog=False, invertX=False, ylog=False, invertY=False, loc_legend='best',
+                            font_size=12, usetex=False):
     """
     Line plot for multiple subplots
     """
+
+    # font size
+    plt.rc('font', size=font_size)
+    # tex
+    plt.rcParams["text.usetex"] = usetex
 
     if outpath != 'show':
         backend_orig = plt.get_backend()
@@ -309,10 +321,16 @@ def ErrorPlotFunc(outpath,
                 xtick_min_label=True, xtick_spe=None, ytick_min_label=True, ytick_spe=None,
                 vlines=None, vline_styles=None, vline_colors=None, vline_labels=None, vline_widths=None,
                 hlines=None, hline_styles=None, hline_colors=None, hline_labels=None, hline_widths=None,
-                xlog=False, invertX=False, ylog=False, invertY=False, loc_legend='best'):
+                xlog=False, invertX=False, ylog=False, invertY=False, loc_legend='best',
+                font_size=12, usetex=False):
     """
     Errorbar plot for multiple parameters
     """
+
+    # font size
+    plt.rc('font', size=font_size)
+    # tex
+    plt.rcParams["text.usetex"] = usetex
 
     if outpath != 'show':
         backend_orig = plt.get_backend()
@@ -420,10 +438,16 @@ def ErrorPlotFunc_subplots(outpath, N_plots,
                             xtick_min_label=True, xtick_spe=None, ytick_min_label=True, ytick_spe=None,
                             vlines=None, vline_styles=None, vline_colors=None, vline_labels=None, vline_widths=None,
                             hlines=None, hline_styles=None, hline_colors=None, hline_labels=None, hline_widths=None,
-                            xlog=False, invertX=False, ylog=False, invertY=False, loc_legend='best'):
+                            xlog=False, invertX=False, ylog=False, invertY=False, loc_legend='best',
+                            font_size=12, usetex=False):
     """
     Errorbar plot for multiple subplots
     """
+
+    # font size
+    plt.rc('font', size=font_size)
+    # tex
+    plt.rcParams["text.usetex"] = usetex
 
     if outpath != 'show':
         backend_orig = plt.get_backend()

@@ -36,10 +36,16 @@ def HistPlotFunc(outpath,
                 vlines=None, vline_styles=None, vline_colors=None, vline_labels=None, vline_widths=None,
                 hlines=None, hline_styles=None, hline_colors=None, hline_labels=None, hline_widths=None,
                 xlog=False, ylog=False,
-                loc_legend='best'):
+                loc_legend='best', 
+                font_size=12, usetex=False):
     """
     Histogram plot for multiple parameters
     """
+
+    # font size
+    plt.rc('font', size=font_size)
+    # tex
+    plt.rcParams["text.usetex"] = usetex
 
     if outpath != 'show':
         backend_orig = plt.get_backend()
@@ -105,10 +111,16 @@ def Hist2DPlotFunc(outpath,
                 DENSITY=False, count_scale=[None, None], count_log=False,
                 TITLE=None, xtick_min_label=True, ytick_min_label=True,
                 vlines=None, vline_styles=None, vline_colors=None, vline_labels=None, vline_widths=None,
-                hlines=None, hline_styles=None, hline_colors=None, hline_labels=None, hline_widths=None):
+                hlines=None, hline_styles=None, hline_colors=None, hline_labels=None, hline_widths=None,
+                font_size=12, usetex=False):
     """
     2D histogram plot
     """
+
+    # font size
+    plt.rc('font', size=font_size)
+    # tex
+    plt.rcParams["text.usetex"] = usetex
 
     if outpath != 'show':
         backend_orig = plt.get_backend()
@@ -173,10 +185,16 @@ def HistPlotFunc_subplots(outpath, N_plots,
                             vlines=None, vline_styles=None, vline_colors=None, vline_labels=None, vline_widths=None,
                             hlines=None, hline_styles=None, hline_colors=None, hline_labels=None, hline_widths=None,
                             xlog=False, ylog=False,
-                            loc_legend='best'):
+                            loc_legend='best',
+                            font_size=12, usetex=False):
     """
     Histogram plot for multiple subplots
     """
+
+    # font size
+    plt.rc('font', size=font_size)
+    # tex
+    plt.rcParams["text.usetex"] = usetex
 
     if outpath != 'show':
         backend_orig = plt.get_backend()
