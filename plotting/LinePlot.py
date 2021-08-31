@@ -339,7 +339,10 @@ def ErrorPlotFunc(outpath,
     fig, ax = plt.subplots()
     for i, xvl in enumerate(xvals):
         yvl = yvals[i]
-        yerr = np.array(yerrs[i])
+        yerr = yerrs[i]
+        if yerr is not None:
+            yerr = np.array(yerr)
+            yerr = np.vstack([yerr[0], yerr[1]])
 
         CR = COLORs[i]
 
@@ -371,7 +374,7 @@ def ErrorPlotFunc(outpath,
         else:
             ERRORSIZE = 2
 
-        ax.errorbar(xvl, yvl, yerr=np.vstack([yerr[0], yerr[1]]), color=CR, label=LAB, linestyle=LN, linewidth=LW, marker=PI, markersize=MS, capsize=ERRORSIZE)
+        ax.errorbar(xvl, yvl, yerr=yerr, color=CR, label=LAB, linestyle=LN, linewidth=LW, marker=PI, markersize=MS, capsize=ERRORSIZE)
 
     if XRANGE is not None:
         plt.xlim(XRANGE[0], XRANGE[1])
@@ -514,7 +517,10 @@ def ErrorPlotFunc_subplots(outpath, N_plots,
 
                 for i, xvl in enumerate(xvals):
                     yvl = yvals[i]
-                    yerr = np.array(yerrs[i])
+                    yerr = yerrs[i]
+                    if yerr is not None:
+                        yerr = np.array(yerr)
+                        yerr = np.vstack([yerr[0], yerr[1]])
 
                     CR = COLORs[i]
 
@@ -546,7 +552,7 @@ def ErrorPlotFunc_subplots(outpath, N_plots,
                     else:
                         ERRORSIZE = 2
 
-                    ax.errorbar(xvl, yvl, yerr=np.vstack([yerr[0], yerr[1]]), color=CR, label=LAB, linestyle=LN, linewidth=LW, marker=PI, markersize=MS, capsize=ERRORSIZE)
+                    ax.errorbar(xvl, yvl, yerr=yerr, color=CR, label=LAB, linestyle=LN, linewidth=LW, marker=PI, markersize=MS, capsize=ERRORSIZE)
 
                 if (LABELs is not None) and (i_plot == 0):
                     ax.legend(frameon=False, loc=loc_legend)
