@@ -5,7 +5,8 @@
 
 ### everything about Line/Point plot
 
-__all__ = ["LinePlotFunc", "LinePlotFunc_subplots", "ErrorPlotFunc", "ErrorPlotFunc_subplots"]
+__all__ = ["LinePlotFunc", "LinePlotFunc_subplots", "ErrorPlotFunc", "ErrorPlotFunc_subplots",
+            "ScatterPlotFunc"]
 
 import math
 import logging
@@ -34,7 +35,8 @@ def LinePlotFunc(outpath,
                 xtick_min_label=True, xtick_spe=None, ytick_min_label=True, ytick_spe=None,
                 vlines=None, vline_styles=None, vline_colors=None, vline_labels=None, vline_widths=None,
                 hlines=None, hline_styles=None, hline_colors=None, hline_labels=None, hline_widths=None,
-                xlog=False, invertX=False, ylog=False, invertY=False, loc_legend='best',
+                xlog=False, invertX=False, ylog=False, invertY=False, 
+                loc_legend='best', legend_frame=False,
                 font_size=12, usetex=False):
     """
     Line plot for multiple parameters
@@ -100,7 +102,7 @@ def LinePlotFunc(outpath,
         _vhlines('h', hlines, line_styles=hline_styles, line_colors=hline_colors, line_labels=hline_labels, line_widths=hline_widths)
 
     if LABELs is not None:
-        plt.legend(frameon=False, loc=loc_legend)
+        plt.legend(frameon=legend_frame, loc=loc_legend)
 
     if xtick_min_label:
         if xlog:
@@ -146,8 +148,11 @@ def LinePlotFunc_subplots(outpath, N_plots,
                             xtick_min_label=True, xtick_spe=None, ytick_min_label=True, ytick_spe=None,
                             vlines=None, vline_styles=None, vline_colors=None, vline_labels=None, vline_widths=None,
                             hlines=None, hline_styles=None, hline_colors=None, hline_labels=None, hline_widths=None,
-                            xlog=False, invertX=False, ylog=False, invertY=False, loc_legend='best',
-                            font_size=12, usetex=False):
+                            xlog=False, invertX=False, ylog=False, invertY=False, 
+                            loc_legend='best', legend_frame=False,
+                            font_size=12, usetex=False,
+                            LABEL_position='inSub', LABEL_position_SUBid=0,
+                            LABEL_cols=1):
     """
     Line plot for multiple subplots
     """
@@ -168,6 +173,7 @@ def LinePlotFunc_subplots(outpath, N_plots,
     fig.subplots_adjust(wspace=0)
 
     i_plot = 0
+    handles = []
     for i_row in range(N_rows):
         for i_col in range(N_cols):
             if i_plot >= N_plots:
@@ -251,10 +257,13 @@ def LinePlotFunc_subplots(outpath, N_plots,
                     else:
                         fillstyle = 'full'
 
-                    ax.plot(xvl, yvl, color=CR, label=LAB, linestyle=LN, linewidth=LW, marker=PI, markersize=MS, fillstyle=fillstyle)
+                    tmp = ax.plot(xvl, yvl, color=CR, label=LAB, linestyle=LN, linewidth=LW, marker=PI, markersize=MS, fillstyle=fillstyle)
+                    if (LABEL_position!='inSub') and (i_plot==0):
+                        handles.append(tmp[0])
+                    del tmp
 
-                if (LABELs is not None) and (i_plot == 0):
-                    ax.legend(frameon=False, loc=loc_legend)
+                if (LABEL_position=='inSub') and (LABELs is not None) and (i_plot == LABEL_position_SUBid):
+                    ax.legend(frameon=legend_frame, loc=loc_legend)
 
                 if subLABEL_list is not None:
                     LABEL = subLABEL_list[i_plot]
@@ -304,6 +313,16 @@ def LinePlotFunc_subplots(outpath, N_plots,
     if TITLE is not None:
         fig.text(0.5, 0.90, TITLE, ha='center')
 
+    if (LABEL_position=='right') and (LABELs is not None):
+        fig.legend(handles, LABELs, 
+                loc = 'upper right',
+                bbox_to_anchor=(0.92, 0.35), fancybox=True, shadow=True)
+
+    if (LABEL_position=='top') and (LABELs is not None):
+        fig.legend(handles, LABELs, 
+                loc = 'center', ncol=LABEL_cols,
+                bbox_to_anchor=(0.5, 0.95), fancybox=True, shadow=True)
+
     if outpath == 'show':
         plt.show()
         plt.close()
@@ -321,7 +340,8 @@ def ErrorPlotFunc(outpath,
                 xtick_min_label=True, xtick_spe=None, ytick_min_label=True, ytick_spe=None,
                 vlines=None, vline_styles=None, vline_colors=None, vline_labels=None, vline_widths=None,
                 hlines=None, hline_styles=None, hline_colors=None, hline_labels=None, hline_widths=None,
-                xlog=False, invertX=False, ylog=False, invertY=False, loc_legend='best',
+                xlog=False, invertX=False, ylog=False, invertY=False, 
+                loc_legend='best', legend_frame=False,
                 font_size=12, usetex=False):
     """
     Errorbar plot for multiple parameters
@@ -393,7 +413,7 @@ def ErrorPlotFunc(outpath,
         _vhlines('h', hlines, line_styles=hline_styles, line_colors=hline_colors, line_labels=hline_labels, line_widths=hline_widths)
 
     if LABELs is not None:
-        plt.legend(frameon=False, loc=loc_legend)
+        plt.legend(frameon=legend_frame, loc=loc_legend)
 
     if xtick_min_label:
         if xlog:
@@ -430,8 +450,6 @@ def ErrorPlotFunc(outpath,
         plt.switch_backend(backend_orig)
         print("Errorbar plot saved in", outpath)
 
-
-
 def ErrorPlotFunc_subplots(outpath, N_plots,
                             xvals_list, yvals_list, yerrs_list,
                             COLORs_list, LABELs_list=None, LINEs_list=None, LINEWs_list=None, POINTs_list=None, POINTSs_list=None, ERRORSIZEs_list=None,
@@ -441,8 +459,14 @@ def ErrorPlotFunc_subplots(outpath, N_plots,
                             xtick_min_label=True, xtick_spe=None, ytick_min_label=True, ytick_spe=None,
                             vlines=None, vline_styles=None, vline_colors=None, vline_labels=None, vline_widths=None,
                             hlines=None, hline_styles=None, hline_colors=None, hline_labels=None, hline_widths=None,
-                            xlog=False, invertX=False, ylog=False, invertY=False, loc_legend='best',
-                            font_size=12, usetex=False):
+                            xlog=False, invertX=False, ylog=False, invertY=False, 
+                            loc_legend='best', legend_frame=False,
+                            font_size=12, usetex=False,
+                            fill_between_xs_list=None, 
+                            fill_between_yLows_list=None, fill_between_yHighs_list=None,
+                            fill_between_COLORs_list=None, fill_between_alphas_list=None,
+                            LABEL_position='inSub', LABEL_position_SUBid=0,
+                            LABEL_cols=1):
     """
     Errorbar plot for multiple subplots
     """
@@ -463,6 +487,7 @@ def ErrorPlotFunc_subplots(outpath, N_plots,
     fig.subplots_adjust(wspace=0)
 
     i_plot = 0
+    handles = []
     for i_row in range(N_rows):
         for i_col in range(N_cols):
             if i_plot >= N_plots:
@@ -552,10 +577,25 @@ def ErrorPlotFunc_subplots(outpath, N_plots,
                     else:
                         ERRORSIZE = 2
 
-                    ax.errorbar(xvl, yvl, yerr=yerr, color=CR, label=LAB, linestyle=LN, linewidth=LW, marker=PI, markersize=MS, capsize=ERRORSIZE)
+                    tmp = ax.errorbar(xvl, yvl, yerr=yerr, color=CR, label=LAB, linestyle=LN, linewidth=LW, marker=PI, markersize=MS, capsize=ERRORSIZE)
+                    if (LABEL_position!='inSub') and (i_plot==0):
+                        handles.append(tmp[0])
+                    del tmp
 
-                if (LABELs is not None) and (i_plot == 0):
-                    ax.legend(frameon=False, loc=loc_legend)
+                if (LABEL_position=='inSub') and (LABELs is not None) and (i_plot == LABEL_position_SUBid):
+                    ax.legend(frameon=legend_frame, loc=loc_legend)
+
+                if fill_between_xs_list is not None:
+                    fill_between_xs = fill_between_xs_list[i_plot]
+                    fill_between_yLows = fill_between_yLows_list[i_plot]
+                    fill_between_yHighs = fill_between_yHighs_list[i_plot]
+                    fill_between_COLORs = fill_between_COLORs_list[i_plot]
+                    fill_between_alphas = fill_between_alphas_list[i_plot]
+                    for i_fill, fill_between_x in enumerate(fill_between_xs):
+                        ax.fill_between(fill_between_x, 
+                                    fill_between_yLows[i_fill], fill_between_yHighs[i_fill],
+                                    alpha=fill_between_alphas[i_fill],
+                                    color=fill_between_COLORs[i_fill])
 
                 if subLABEL_list is not None:
                     LABEL = subLABEL_list[i_plot]
@@ -605,6 +645,16 @@ def ErrorPlotFunc_subplots(outpath, N_plots,
     if TITLE is not None:
         fig.text(0.5, 0.90, TITLE, ha='center')
 
+    if (LABEL_position=='right') and (LABELs is not None):
+        fig.legend(handles, LABELs, 
+                loc = 'upper right',
+                bbox_to_anchor=(0.92, 0.35), fancybox=True, shadow=True)
+
+    if (LABEL_position=='top') and (LABELs is not None):
+        fig.legend(handles, LABELs, 
+                loc = 'center', ncol=LABEL_cols,
+                bbox_to_anchor=(0.5, 0.95), fancybox=True, shadow=True)
+
     if outpath == 'show':
         plt.show()
         plt.close()
@@ -613,3 +663,92 @@ def ErrorPlotFunc_subplots(outpath, N_plots,
         plt.close()
         plt.switch_backend(backend_orig)
         print("Errorbar plot saved as", outpath)
+
+def ScatterPlotFunc(outpath,
+                xval, yval, POINT=None, POINTS=None, alpha=None,
+                cval=None, cmap=None, cmin=None, cmax=None, clog=False,
+                bar_loc=None, bar_ori=None, bar_label=None, bar_tick=None,
+                XRANGE=None, YRANGE=None,
+                XLABEL=None, YLABEL=None, TITLE=None,
+                xtick_min_label=True, xtick_spe=None, ytick_min_label=True, ytick_spe=None,
+                vlines=None, vline_styles=None, vline_colors=None, vline_labels=None, vline_widths=None,
+                hlines=None, hline_styles=None, hline_colors=None, hline_labels=None, hline_widths=None,
+                xlog=False, invertX=False, ylog=False, invertY=False, 
+                loc_legend='best', legend_frame=False,
+                font_size=12, usetex=False):
+    """
+    scatter plot with colourful points
+        only support for one set of parameters
+        for multi sets of parameters use LinePlotFunc
+    """
+
+    # font size
+    plt.rc('font', size=font_size)
+    # tex
+    plt.rcParams["text.usetex"] = usetex
+
+    if outpath != 'show':
+        backend_orig = plt.get_backend()
+        plt.switch_backend("agg")
+
+    fig, ax = plt.subplots()
+
+    if clog:
+        norm = mpl.colors.LogNorm(vmin=cmin, vmax=cmax)
+    else:
+        norm = mpl.colors.Normalize(vmin=cmin, vmax=cmax)
+    plt.scatter(xval, yval, s=POINTS, c=cval, marker=POINT,
+                cmap=cmap, norm=norm, alpha=alpha)
+
+    if cval is not None:
+        plt.colorbar(location=bar_loc, orientation=bar_ori, ticks=bar_tick, label=bar_label)
+
+    if XRANGE is not None:
+        plt.xlim(XRANGE[0], XRANGE[1])
+    if YRANGE is not None:
+        plt.ylim(YRANGE[0], YRANGE[1])
+
+    if xlog:
+        plt.xscale('log')
+    if ylog:
+        plt.yscale('log')
+
+    if vlines is not None:
+        _vhlines('v', vlines, line_styles=vline_styles, line_colors=vline_colors, line_labels=vline_labels, line_widths=vline_widths)
+    if hlines is not None:
+        _vhlines('h', hlines, line_styles=hline_styles, line_colors=hline_colors, line_labels=hline_labels, line_widths=hline_widths)
+
+    if xtick_min_label:
+        if xlog:
+            ax.xaxis.set_minor_locator(LogLocator(base=10.0, subs=None, numticks=10))
+        else:
+            ax.xaxis.set_minor_locator(AutoMinorLocator())
+    if ytick_min_label:
+        if ylog:
+            ax.yaxis.set_minor_locator(LogLocator(base=10.0, subs=None, numticks=10))
+        else:
+            ax.yaxis.set_minor_locator(AutoMinorLocator())
+
+    if xtick_spe is not None:
+        plt.xticks(xtick_spe[0], xtick_spe[1])
+    if ytick_spe is not None:
+        plt.yticks(ytick_spe[0], ytick_spe[1])
+
+    if invertX:
+        plt.gca().invert_xaxis()
+    if invertY:
+        plt.gca().invert_yaxis()
+
+    plt.xlabel(XLABEL)
+    plt.ylabel(YLABEL)
+    if TITLE is not None:
+        plt.title(TITLE)
+
+    if outpath=='show':
+        plt.show()
+        plt.close()
+    else:
+        plt.savefig(outpath, dpi=300)
+        plt.close()
+        plt.switch_backend(backend_orig)
+        print("Scatter plot saved as", outpath)
